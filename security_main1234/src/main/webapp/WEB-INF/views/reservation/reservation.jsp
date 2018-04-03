@@ -14,6 +14,22 @@
 <style>
 ul, li { list-style: none; }
 .container { margin: 10px auto; }
+select,input,.form-control {
+    width: 200px;
+    height: 30px;
+    padding-left: 10px;
+    font-size: 18px;
+    color: #006fff;
+    border: 1px solid #006fff;
+    border-radius: 3px;
+}
+textarea{
+	padding-left: 10px;
+    font-size: 18px;
+    color: #006fff;
+    border: 1px solid #006fff;
+    border-radius: 3px;
+}
 </style>
 </head>
 
@@ -22,10 +38,40 @@ ul, li { list-style: none; }
 <div class="container">
   <div class="row">
     <div class="col-lg-4">
-      <h2>달력</h2>
       <form class="demo-1">
         <input type='text' class="form-control">
       </form>
+    </div>
+    <div>
+    	<select>
+    		<option>방문시간</option>
+    	</select>
+    </div>
+    <div>
+    	<select>
+    		<option>이용시간</option>
+    	</select>
+    </div>
+    <div>
+    	<select>
+    		<option>인원수</option>
+    	</select>
+    </div>
+    <div>
+    	<textarea rows="10" cols="30">
+    		메모1
+    	</textarea>
+    </div>
+	<div>
+    	<textarea rows="10" cols="30">
+    		메모2
+    	</textarea>
+    </div>
+    <div>
+    	<input type="text" value="add customer">
+    </div>
+    <div>
+    	<input type="text" value="add order">
     </div>
   </div>
 </div>
