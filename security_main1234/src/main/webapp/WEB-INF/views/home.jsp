@@ -55,22 +55,18 @@
 		</div>
 
 		<!-- Header -->
-		<sec:authorize access="isAnonymous()">
 			<header id="header" class="alt">
 				<a href="<c:url value=""/>">홈으로</a>
 				<a href="<c:url value="/join/joinPermission" />">회원가입</a>
 				<a href="<c:url value="/login/loginForm" />">로그인</a>
 				<a href="#menu">Menu</a>
 			</header>
-		</sec:authorize>
 		<!-- Nav -->
 			<nav id="menu">
 				<ul class="links">
 					<li><a href="">Home</a></li>
-					<sec:authorize access="isAnonymous()">
 					<li><a href="<c:url value="/join/joinPermission" />">Join</a></li>
 					<li><a href="<c:url value="/login/loginForm" />">Login</a></li>
-					</sec:authorize>
 				</ul>
 			</nav>
 
