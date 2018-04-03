@@ -4,9 +4,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.security.gurume365.security.CustomAuthenticationProvider;
 /**
  * 계정을 관리하는 객체를 생성
  * UsersDetails 인터페이스로 implements 받아 세션 정보를 User 클래스에 담아 다닌다.
@@ -15,10 +21,12 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 public class Member implements UserDetails  {
 
+	static final Logger logger = LoggerFactory.getLogger(Member.class);
 	private static final long serialVersionUID = 1L;
 	private Users user;
 	
 	public Member(Users user) { this.user = user; }
+	
 	
 	public Users getuser() { return user; }
 	
@@ -27,7 +35,8 @@ public class Member implements UserDetails  {
 		// TODO Auto-generated method stub
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		
-		authorities.add(new SimpleGrantedAuthority("USER"));
+		authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+		
 	
 		return authorities;
 	}

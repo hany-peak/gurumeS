@@ -24,8 +24,7 @@
 	</http>
 	<beans:bean id="authenticationProvider"
 		class="com.security.gurume365.security.CustomAuthenticationProvider">
-		
-		</beans:bean>
+	</beans:bean>
 	<beans:bean id="CustomUserDetailsService"
 		class="com.security.gurume365.security.CustomUserDetailsService">
 	</beans:bean>

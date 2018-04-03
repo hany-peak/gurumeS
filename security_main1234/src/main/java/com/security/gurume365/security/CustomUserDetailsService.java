@@ -21,7 +21,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 	
 	@Autowired
 	SqlSession sqlSession;
-
 	@Override
 	public Member loadUserByUsername(String username) throws UsernameNotFoundException {
 		// 디비에서 유저정보를 불러오는 메소드. 이것을 AutenticationProvider에서 인증을 통함
@@ -30,15 +29,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 		logger.info("로드유저바이유저네임"+ username);
 		Users userInfo = null;
 		Member memberInfo = null;
-		
 		try {
 			logger.info("UserInfo" +userInfo);
 			UsersMapper mapper = sqlSession.getMapper(UsersMapper.class);
 			userInfo = mapper.selectUsers(username);
-			
 			logger.info("로드유저바이유저네임"+ userInfo);
 			memberInfo = new Member(userInfo);
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
