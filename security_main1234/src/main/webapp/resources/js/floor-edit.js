@@ -15,6 +15,20 @@ $(function() {
 	var xPos;
 	var yPos;
 	var currentDrag;
+	/*var tableX = new Array();
+	var tableY = new Array();*/
+	
+	var tableX;
+	var tableY;
+	var tableShape;
+	var tableAngle;
+	var tablemin;
+	var tablemax;
+	var tableID = $('.draggable-table').map(function(idx, elem) {
+		return elem.id;
+	});
+	
+	
 	
 	
 	setSize();
@@ -22,29 +36,29 @@ $(function() {
 		setSize();
 	});
 	
+	// 탭 생성, 삭제 기능 추가/ DB에도 floor_name 추가할 것!!
 	$('#setSizeBtn').on('click', function() {
-		actualH = $('#floor-H').val();
-		actualW = $('#floor-W').val();
 		
-		var floor_no = 1; // 탭 생성, 삭제 기능 추가/ DB에도 floor_name 추가할 것!!
-		
-		$.ajax({
-			url: 'setFloorSize',
-			type: 'post',
-			data: {
-				floorH: actualH,
-				floorW: actualW,
-				floor_no: floor_no
-			},
-			success: function() {
-				alert('성공');
-			},
-			error: function(err) {
-				alert(err);
-			}
+		tableID = $('.draggable-table').map(function(idx, elem) {
 			
+			return elem.id;
 		});
 		
+		if(tableID.length!=0) {
+			alert('테이블이 있을 때 플로어를 변경할 수 없습니다.');
+			return;
+		}
+		
+		if(isNaN($('#floor-H').val())||isNaN($('#floor-W').val())) {
+			alert('숫자를 입력하세요.');
+			return;
+		}
+		if($('#floor-H').val()<3||$('#floor-W')<3) {
+			alert('3 이상의 숫자를 입력하세요.');
+			return;
+		}
+		actualH = $('#floor-H').val();
+		actualW = $('#floor-W').val();
 		
 		setSize();
 	});
@@ -71,6 +85,24 @@ $(function() {
 		
 		$('#floor-enable').css( 'top', t );
 		$('#floor-enable').css( 'left', l);
+		
+		
+		
+		
+		
+		
+		for(var i=0; i<tableID.length; i++) {
+			/*$('#' + tableID[i]).css('left', (tableX[i]/sizeRatio)+parseInt($('#floor-enable').css('left')));
+			$('#' + tableID[i]).css('top', (tableY[i]/sizeRatio)+parseInt($('#floor-enable').css('top')));*/
+			$('#' + tableID[i]).css('left', tableX[i]*($('#floor-enable').width()-$('#' + tableID[i]).width())/100+parseInt($('#floor-enable').css('left')));
+			$('#' + tableID[i]).css('top', tableY[i]*($('#floor-enable').height()-$('#' + tableID[i]).height())/100+parseInt($('#floor-enable').css('top')));
+			
+			
+		}
+		
+		
+		
+		
 		
 		
 		
@@ -237,7 +269,7 @@ $(function() {
             else {
             	
             }
-            alert(currentDrag);
+            /*alert(currentDrag);*/
             
 		}
 		
@@ -245,12 +277,37 @@ $(function() {
 	
 	$('#floor-edit').droppable({
 		drop: function(event) {
+			setTableIcon();				
 			if(currentDrag=="#draggable-circle"||currentDrag=="#draggable-rect") {
-				setTableIcon();				
 			}
 			else {
 				
 			}
+			
+			tableX = $('.draggable-table').map(function(idx, elem) {
+				var abX = (parseInt($(elem).css('left')) - parseInt($('#floor-enable').css('left')))/($('#floor-enable').width()-$(elem).width())*100;
+				/*var abX = (parseInt($(elem).css('left')) - parseInt($('#floor-enable').css('left')))*sizeRatio;*/
+				/*console.log('abX:' + abX);*/
+				return abX;
+			});
+			tableY = $('.draggable-table').map(function(idx, elem) {
+				var abY = (parseInt($(elem).css('top')) - parseInt($('#floor-enable').css('top')))/($('#floor-enable').height()-$(elem).height())*100;
+				/*var abY = (parseInt($(elem).css('top')) - parseInt($('#floor-enable').css('top')))*sizeRatio;*/
+				/*console.log('abY:' + abY);*/
+				return abY;
+			});
+			tableID = $('.draggable-table').map(function(idx, elem) {
+				
+				return elem.id;
+			});
+			
+			var tableInfo = $('.draggable-table').map(function(idx, elem) {
+				return {x: 1, y: 2, shape: 'rect', angle: 24, min: 2, max: 4, ID: 'test'};
+			});
+			for(var i=0; i<tableInfo.length; i++) {
+				console.log(tableInfo[i]);
+			}
+			
 		}
 	});
 	
@@ -266,94 +323,93 @@ $(function() {
 	
 	function createTable(cd, x, y) {
 		
-		var create_table_no;
-		var table_shape;
+		var create_table_no = 0;
+		
+		while(true) {
+			if($('#draggable-table' + create_table_no).length==0) {
+				break;
+			}
+			create_table_no += 1;
+		}
+		
+		/*var table_shape;
 		if(cd=="#draggable-circle") {
 			table_shape = "circle";
 		} else if(cd=="#draggable-rect") {
 			table_shape = "rect"
+		}*/
+		
+		var html = '' +
+		'<div id="draggable-table' + create_table_no + '">' +
+		/*'<div id="rotateable-circle">' +
+				'<div id="rotate-circle"></div>' +
+			'</div>' +*/
+		'<div id="drag-table' + create_table_no + '"></div>' +
+		'</div>';
+		$( '#floor-edit' ).append(html);
+		
+		
+		$('#draggable-table' + create_table_no).draggable({
+			handle: '#drag-table' + create_table_no,
+			containment: '#floor-edit',
+			drag: function(event) {
+				currentDrag = "#draggable-table" + create_table_no;
+			}
+		
+		});
+		
+		if(cd=="#draggable-circle") {
+			
+			$('#draggable-table' + create_table_no).width(tableC_W);
+			$('#draggable-table' + create_table_no).height(tableC_W);
+			/*$('#drag-table' + create_table_no).css('border-radius', '50%');*/
+			
+			/*$('#draggable-table' + create_table_no).addClass('draggable-table');*/
+			$('#drag-table' + create_table_no).addClass('drag-table-circle');
+		}
+		else if(cd=="#draggable-rect") {
+			
+			$('#draggable-table' + create_table_no).width(tableR_W);
+			$('#draggable-table' + create_table_no).height(tableR_H);
+
+			/*$('#draggable-table' + create_table_no).addClass('draggable-table');*/
+			$('#drag-table' + create_table_no).addClass('drag-table-rect');
+			/*$('#drag-table' + create_table_no).css('border-radius', '3%');*/
 		}
 		
-		$.ajax({
-			url: 'createTableLayout',
-			type: 'post',
-			data: {xPos: x, yPos: y, shape: table_shape},
-			dataType: 'json',
-			success: function(dat) {
-
-				/*addTableList(dat.no, dat.xPos, dat.yPos, );*/
-				
-				
-				
-				
-				
-				
-				
-
-				create_table_no = dat;
-				
-				var html = '' +
-				'<div id="draggable-table' + create_table_no + '">' +
-				/*'<div id="rotateable-circle">' +
-						'<div id="rotate-circle"></div>' +
-					'</div>' +*/
-				'<div id="drag-table' + create_table_no + '"></div>' +
-				'</div>';
-				$( '#floor-edit' ).append(html);
-				
-				
-				$('#draggable-table' + create_table_no).draggable({
-					handle: '#drag-table' + create_table_no,
-					containment: '#floor-edit',
-					drag: function(event) {
-						currentDrag = "#draggable-table" + create_table_no;
-					}
-				
-				});
-				
-				if(cd=="#draggable-circle") {
-					table_shape = 'circle';
-					$('#draggable-table' + create_table_no).width(tableC_W);
-					$('#draggable-table' + create_table_no).height(tableC_W);
-					$('#drag-table' + create_table_no).css('border-radius', '50%');
-				}
-				else if(cd=="#draggable-rect") {
-					table_shape = 'rect';
-					$('#draggable-table' + create_table_no).width(tableR_W);
-					$('#draggable-table' + create_table_no).height(tableR_H);
-					$('#drag-table' + create_table_no).css('border-radius', '3%');
-				}
-				
-				
-				$('#draggable-table' + create_table_no).css('position', 'absolute');
-				$('#draggable-table' + create_table_no).css('top', y);
-				$('#draggable-table' + create_table_no).css('left', x);
-				
-				
-				$('#drag-table' + create_table_no).width('100%');
-				$('#drag-table' + create_table_no).height('100%');
-				$('#drag-table' + create_table_no).css('position', 'absolute');
-				$('#drag-table' + create_table_no).css('background-color', '#808080');
-				$('#drag-table' + create_table_no).css('border', '1px solid #ff0000');
-				
-				/*alert(cd + '');*/
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-			},error: function(err) {
-				console.log(err);
-			}
-			
+		
+		/*$('#draggable-table' + create_table_no).css('position', 'absolute');*/
+		$('#draggable-table' + create_table_no).css('top', y);
+		$('#draggable-table' + create_table_no).css('left', x);
+		$('#draggable-table' + create_table_no).addClass('draggable-table');
+		
+		/*$('#drag-table' + create_table_no).width('100%');
+		$('#drag-table' + create_table_no).height('100%');
+		$('#drag-table' + create_table_no).css('position', 'absolute');
+		$('#drag-table' + create_table_no).css('background-color', '#808080');
+		$('#drag-table' + create_table_no).css('border', '1px solid #ff0000');*/
+		
+		/*alert(cd + '');*/
+		
+		
+		
+		/*tableX = $('.draggable-table').map(function(idx, elem) {
+			var abX = (parseInt($(elem).css('left')) - parseInt($('#floor-enable').css('left')))*sizeRatio;
+			console.log('abX:' + abX);
+			return abX;
 		});
+		tableY = $('.draggable-table').map(function(idx, elem) {
+			var abY = (parseInt($(elem).css('top')) - parseInt($('#floor-enable').css('top')))*sizeRatio;
+			console.log('abY:' + abY);
+			return abY;
+		});
+		tableID = $('.draggable-table').map(function(idx, elem) {
+			
+			return elem.id;
+		});*/
+		
+		
+		
 		
 		
 

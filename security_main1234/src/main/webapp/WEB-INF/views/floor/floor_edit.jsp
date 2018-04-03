@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<%-- <script src="<c:url value='/resources/js/jquery-3.2.1.js' />"></script> --%>
+
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
@@ -152,8 +152,8 @@
 		<div id="floorinfo-div">
 			<br>
 			<ul>
-				<li>
-					세로&nbsp;길이&nbsp;:&nbsp;${floor_H},&nbsp;가로&nbsp;길이&nbsp;:&nbsp;${floor_W}
+				<li id="floorSize-info">
+					<%-- 세로&nbsp;길이&nbsp;:&nbsp;${floor_H},&nbsp;가로&nbsp;길이&nbsp;:&nbsp;${floor_W} --%>
 				</li>
 				<%-- <li>
 					${}

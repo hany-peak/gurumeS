@@ -33,6 +33,10 @@ public class FloorController {
 		/*Restaurant restaurant = (Restaurant)session.getAttribute("restaurant");
 		shop_no = restaurant.shop_no; */
 		
+		session.setAttribute("floor_H", floorH);
+		session.setAttribute("floor_W", floorW);
+		
+		
 		return 1;
 		
 	}
@@ -41,9 +45,14 @@ public class FloorController {
 	@ResponseBody
 	public int getFloorSize(HttpSession session) {
 		int shop_no;
-		
 		/*Restaurant restaurant = (Restaurant)session.getAttribute("restaurant");
 		shop_no = restaurant.shop_no; */
+		/*플로어 탭 추가 시에 모든 플로어 정보 불러 올 수 있도록 shop_no를 받아 쿼리
+		 * 플로어 객체의 리스트로 반환
+		 */
+		
+		float floorH = 10, floorW = 10;
+		
 		
 		return 1;
 		
