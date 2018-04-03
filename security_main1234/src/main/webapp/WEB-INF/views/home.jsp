@@ -76,6 +76,9 @@
 					<li><a href="">Home</a></li>
 					<li><a href="<c:url value="/join/joinPermission" />">Join</a></li>
 					<li><a href="<c:url value="/login/loginForm" />">Login</a></li>
+					<sec:authorize access="isAuthenticated()">
+						<a href="/gurume365/logout">로그아웃</a>
+					</sec:authorize>
 					<li><a href="<c:url value="/join/joinInfoPage" />">Company</a></li>
 					<li><a href="<c:url value="/floor/floor-edit" />">floor-edit</a></li>
 				</ul>
