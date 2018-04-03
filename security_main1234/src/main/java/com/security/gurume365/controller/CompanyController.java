@@ -24,8 +24,9 @@ public class CompanyController {
 	}
 	
 	@RequestMapping(value="/join/jusoPopup",method=RequestMethod.POST)
-	public String jusoPopup(Model model){
-		
+	public String jusoPopup(Model model,String addrDetail, String roadAddrPart1){
+		model.addAttribute("addr1", roadAddrPart1);
+		model.addAttribute("addr2", addrDetail);
 		return "join/jusoData";
 	}
 }
