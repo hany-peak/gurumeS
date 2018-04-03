@@ -68,7 +68,7 @@
 					<li><a href="<c:url value="/join/joinPermission" />">Join</a></li>
 					<li><a href="<c:url value="/login/loginForm" />">Login</a></li>
 					<li><a href="<c:url value="/join/joinInfoPage" />">Company</a></li>
-					<li><a href="<c:url value="/floor/floor-edit" />">floor-edit</a></li>
+					<li><a href="<c:url value="/floor/floor_edit" />">floor-edit</a></li>
 				</ul>
 			</nav>
 
