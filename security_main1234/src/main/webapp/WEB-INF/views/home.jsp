@@ -59,6 +59,7 @@
 				<a href="<c:url value=""/>">홈으로</a>
 				<a href="<c:url value="/join/joinPermission" />">회원가입</a>
 				<a href="<c:url value="/login/loginForm" />">로그인</a>
+				<a href="<c:url value="/logout" />">Logout</a>
 				<a href="#menu">Menu</a>
 			</header>
 		<!-- Nav -->
