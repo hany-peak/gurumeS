@@ -15,9 +15,9 @@
 		<intercept-url pattern="/resources/**" access="permitAll" />
 		<csrf disabled="true" />
 		<form-login login-page="/login/loginForm"
-			default-target-url="/" authentication-failure-url="/login/loginForm?error"
+			default-target-url="/loginInfo" authentication-failure-url="/login/loginForm?error"
 			username-parameter="id" password-parameter="password" />
-		<logout logout-url="/logout" logout-success-url="/" />
+		<logout logout-url="/logout" invalidate-session="true" logout-success-url="/" />
 
 
 		<access-denied-handler error-page="/login/accessDenied" />

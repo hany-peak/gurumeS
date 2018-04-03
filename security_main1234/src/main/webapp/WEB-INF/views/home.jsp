@@ -3,6 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+
 <!DOCTYPE html>
 <html>
 
@@ -46,7 +47,6 @@
 			}
 		</script>
 	</head>
-
 	
 	<body onload="InitializeStaticMenu();">
 		<!-- Banner -->
@@ -56,10 +56,18 @@
 
 		<!-- Header -->
 			<header id="header" class="alt">
+			
 				<a href="<c:url value=""/>">홈으로</a>
-				<a href="<c:url value="/join/joinPermission" />">회원가입</a>
-				<a href="<c:url value="/login/loginForm" />">로그인</a>
-				<a href="<c:url value="/logout" />">Logout</a>
+				
+				<sec:authorize access="isAnonymous()">
+					<a href="<c:url value="/join/joinPermission" />">회원가입</a>
+					<a href="<c:url value="/login/loginForm" />">로그인</a>
+				</sec:authorize>
+							
+				<sec:authorize access="isAuthenticated()">
+					<a href="/gurume365/logout">로그아웃</a>
+				</sec:authorize>
+			
 				<a href="#menu">Menu</a>
 			</header>
 		<!-- Nav -->

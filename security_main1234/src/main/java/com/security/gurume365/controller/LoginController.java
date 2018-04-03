@@ -3,12 +3,17 @@ package com.security.gurume365.controller;
 import java.util.Locale;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,11 +33,16 @@ public class LoginController {
 	@Autowired
 	private JavaMailSender mailSender;
 	
+
 	@RequestMapping(value = "/login/loginForm", method = RequestMethod.GET)
 	public String loginFor(Locale locale, Model model) {
 		logger.info("Welcome Login Form!");
 		
 		return "login/loginForm";
+	}
+	@RequestMapping(value = "/loginInfo", method = RequestMethod.GET)
+	public String loginInfo(Locale locale, Model model, Authentication auth) {
+		return "home";
 	}
 	
 	@RequestMapping(value = "/login/accessDenied", method = RequestMethod.GET)
@@ -41,6 +51,7 @@ public class LoginController {
 		
 		return "login/accessDenied";
 	}
+	
 	
 	@RequestMapping(value="/join/joinPermission",method=RequestMethod.GET)
 	public String joinPermission(Locale locale, Model model){
@@ -62,17 +73,17 @@ public class LoginController {
 		
 		String setfrom = "GURUME365";
 		String tomail = users.getId();
-		String title = "GURUME365 ��������";
+		String title = "GURUME365 ";
 		try {
 			MimeMessage message = mailSender.createMimeMessage();
 			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
 
-			messageHelper.setFrom(setfrom); // �����»�� �����ϰų� �ϸ� �����۵��� ����
-			messageHelper.setTo(tomail); // �޴»�� �̸���
-			messageHelper.setSubject(title); // ���������� ������ �����ϴ�
+			messageHelper.setFrom(setfrom);
+			messageHelper.setTo(tomail);
+			messageHelper.setSubject(title);
 			messageHelper.setText(new StringBuffer().append("��������")
 					.append("http://localhost:8888/gurume365/join/joinPermit?id="+users.getId())
-							.append(" �̸��� ���� Ȯ��").toString()); // ���� ����
+							.append(" �̸��� ���� Ȯ��").toString());
 			mailSender.send(message);
 		} catch (Exception e) {
 			System.out.println(e);
