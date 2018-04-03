@@ -35,9 +35,17 @@ public class FloorController {
 		
 		return 1;
 		
+	}
+	
+	@RequestMapping(value = "/floor/getFloorSize", method = RequestMethod.GET)
+	@ResponseBody
+	public int getFloorSize(HttpSession session) {
+		int shop_no;
 		
+		/*Restaurant restaurant = (Restaurant)session.getAttribute("restaurant");
+		shop_no = restaurant.shop_no; */
 		
-		
+		return 1;
 		
 	}
 	
