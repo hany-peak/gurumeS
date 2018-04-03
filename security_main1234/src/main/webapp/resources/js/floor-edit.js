@@ -18,7 +18,7 @@ $(function() {
 	/*var tableX = new Array();
 	var tableY = new Array();*/
 	
-	var tableX;
+	/*var tableX;
 	var tableY;
 	var tableShape;
 	var tableAngle;
@@ -26,6 +26,10 @@ $(function() {
 	var tablemax;
 	var tableID = $('.draggable-table').map(function(idx, elem) {
 		return elem.id;
+	});*/
+	
+	var tableInfo = $('.draggable-table').map(function(idx, elem) {
+		return {x: 0, y: 0, shape: '?', angle: 0, min: 0, max: 0, ID: '?'};
 	});
 	
 	
@@ -39,12 +43,12 @@ $(function() {
 	// 탭 생성, 삭제 기능 추가/ DB에도 floor_name 추가할 것!!
 	$('#setSizeBtn').on('click', function() {
 		
-		tableID = $('.draggable-table').map(function(idx, elem) {
-			
-			return elem.id;
+		var tableInfo = $('.draggable-table').map(function(idx, elem) {
+			return {x: 0, y: 0, shape: '?', angle: 0, min: 0, max: 0, ID: '?'};
 		});
+		alert(tableInfo.length);
 		
-		if(tableID.length!=0) {
+		if(tableInfo.length!=0) {
 			alert('테이블이 있을 때 플로어를 변경할 수 없습니다.');
 			return;
 		}
@@ -91,11 +95,11 @@ $(function() {
 		
 		
 		
-		for(var i=0; i<tableID.length; i++) {
+		for(var i=0; i<tableInfo.length; i++) {
 			/*$('#' + tableID[i]).css('left', (tableX[i]/sizeRatio)+parseInt($('#floor-enable').css('left')));
 			$('#' + tableID[i]).css('top', (tableY[i]/sizeRatio)+parseInt($('#floor-enable').css('top')));*/
-			$('#' + tableID[i]).css('left', tableX[i]*($('#floor-enable').width()-$('#' + tableID[i]).width())/100+parseInt($('#floor-enable').css('left')));
-			$('#' + tableID[i]).css('top', tableY[i]*($('#floor-enable').height()-$('#' + tableID[i]).height())/100+parseInt($('#floor-enable').css('top')));
+			$('#' + tableInfo[i].ID).css('left', tableInfo[i].x*($('#floor-enable').width()-$('#' + tableInfo[i].ID).width())/100+parseInt($('#floor-enable').css('left')));
+			$('#' + tableInfo[i].ID).css('top', tableInfo[i].y*($('#floor-enable').height()-$('#' + tableInfo[i].ID).height())/100+parseInt($('#floor-enable').css('top')));
 			
 			
 		}
@@ -284,29 +288,16 @@ $(function() {
 				
 			}
 			
-			tableX = $('.draggable-table').map(function(idx, elem) {
+			/*tableInfo = $('.draggable-table').map(function(idx, elem) {
 				var abX = (parseInt($(elem).css('left')) - parseInt($('#floor-enable').css('left')))/($('#floor-enable').width()-$(elem).width())*100;
-				/*var abX = (parseInt($(elem).css('left')) - parseInt($('#floor-enable').css('left')))*sizeRatio;*/
-				/*console.log('abX:' + abX);*/
-				return abX;
-			});
-			tableY = $('.draggable-table').map(function(idx, elem) {
 				var abY = (parseInt($(elem).css('top')) - parseInt($('#floor-enable').css('top')))/($('#floor-enable').height()-$(elem).height())*100;
-				/*var abY = (parseInt($(elem).css('top')) - parseInt($('#floor-enable').css('top')))*sizeRatio;*/
-				/*console.log('abY:' + abY);*/
-				return abY;
+				return {x: abX, y: abY, shape: '?', angle: 0, min: 2, max: 4, ID: elem.id};
 			});
-			tableID = $('.draggable-table').map(function(idx, elem) {
-				
-				return elem.id;
-			});
+			*/
 			
-			var tableInfo = $('.draggable-table').map(function(idx, elem) {
-				return {x: 1, y: 2, shape: 'rect', angle: 24, min: 2, max: 4, ID: 'test'};
-			});
-			for(var i=0; i<tableInfo.length; i++) {
-				console.log(tableInfo[i]);
-			}
+			
+			
+		
 			
 		}
 	});
@@ -332,8 +323,11 @@ $(function() {
 			create_table_no += 1;
 		}
 		
-		/*var table_shape;
-		if(cd=="#draggable-circle") {
+		var tableShape = '?';
+		var tableAngle = 0;
+		var tableMin = 2;
+		var tableMax = 4;
+		/*if(cd=="#draggable-circle") {
 			table_shape = "circle";
 		} else if(cd=="#draggable-rect") {
 			table_shape = "rect"
@@ -359,7 +353,7 @@ $(function() {
 		});
 		
 		if(cd=="#draggable-circle") {
-			
+			tableShape = 'circle';
 			$('#draggable-table' + create_table_no).width(tableC_W);
 			$('#draggable-table' + create_table_no).height(tableC_W);
 			/*$('#drag-table' + create_table_no).css('border-radius', '50%');*/
@@ -368,7 +362,7 @@ $(function() {
 			$('#drag-table' + create_table_no).addClass('drag-table-circle');
 		}
 		else if(cd=="#draggable-rect") {
-			
+			tableShape = 'rect';
 			$('#draggable-table' + create_table_no).width(tableR_W);
 			$('#draggable-table' + create_table_no).height(tableR_H);
 
@@ -393,24 +387,15 @@ $(function() {
 		
 		
 		
-		/*tableX = $('.draggable-table').map(function(idx, elem) {
-			var abX = (parseInt($(elem).css('left')) - parseInt($('#floor-enable').css('left')))*sizeRatio;
-			console.log('abX:' + abX);
-			return abX;
+		tableInfo = $('.draggable-table').map(function(idx, elem) {
+			var abX = (parseInt($(elem).css('left')) - parseInt($('#floor-enable').css('left')))/($('#floor-enable').width()-$(elem).width())*100;
+			var abY = (parseInt($(elem).css('top')) - parseInt($('#floor-enable').css('top')))/($('#floor-enable').height()-$(elem).height())*100;
+			return {x: abX, y: abY, shape: tableShape, angle: tableAngle, min: tableMin, max: tableMax, ID: elem.id};
 		});
-		tableY = $('.draggable-table').map(function(idx, elem) {
-			var abY = (parseInt($(elem).css('top')) - parseInt($('#floor-enable').css('top')))*sizeRatio;
-			console.log('abY:' + abY);
-			return abY;
-		});
-		tableID = $('.draggable-table').map(function(idx, elem) {
-			
-			return elem.id;
-		});*/
 		
-		
-		
-		
+		for(var i=0; i<tableInfo.length; i++) {
+			console.log(tableInfo[i]);
+		}
 		
 
 		
