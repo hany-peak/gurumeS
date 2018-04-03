@@ -1,4 +1,4 @@
-package com.security.gurume365;
+package com.security.gurume365.controller;
 
 import java.util.Locale;
 
@@ -62,17 +62,17 @@ public class LoginController {
 		
 		String setfrom = "GURUME365";
 		String tomail = users.getId();
-		String title = "GURUME365 ÀÎÁõ¸ÞÀÏ";
+		String title = "GURUME365 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
 		try {
 			MimeMessage message = mailSender.createMimeMessage();
 			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
 
-			messageHelper.setFrom(setfrom); // º¸³»´Â»ç¶÷ »ý·«ÇÏ°Å³ª ÇÏ¸é Á¤»óÀÛµ¿À» ¾ÈÇÔ
-			messageHelper.setTo(tomail); // ¹Þ´Â»ç¶÷ ÀÌ¸ÞÀÏ
-			messageHelper.setSubject(title); // ¸ÞÀÏÁ¦¸ñÀº »ý·«ÀÌ °¡´ÉÇÏ´Ù
-			messageHelper.setText(new StringBuffer().append("¸ÞÀÏÀÎÁõ")
+			messageHelper.setFrom(setfrom); // ï¿½ï¿½ï¿½ï¿½ï¿½Â»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°Å³ï¿½ ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ûµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+			messageHelper.setTo(tomail); // ï¿½Þ´Â»ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½
+			messageHelper.setSubject(title); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½
+			messageHelper.setText(new StringBuffer().append("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")
 					.append("http://localhost:8888/gurume365/join/joinPermit?id="+users.getId())
-							.append(" ÀÌ¸ÞÀÏ ÀÎÁõ È®ÀÎ").toString()); // ¸ÞÀÏ ³»¿ë
+							.append(" ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½").toString()); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			mailSender.send(message);
 		} catch (Exception e) {
 			System.out.println(e);

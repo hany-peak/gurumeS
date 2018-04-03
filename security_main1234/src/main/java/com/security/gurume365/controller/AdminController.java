@@ -1,4 +1,4 @@
-package com.security.gurume365;
+package com.security.gurume365.controller;
 
 import java.util.Locale;
 
