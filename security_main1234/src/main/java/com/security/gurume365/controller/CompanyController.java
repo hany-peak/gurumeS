@@ -29,4 +29,7 @@ public class CompanyController {
 		model.addAttribute("addr2", addrDetail);
 		return "join/jusoData";
 	}
+	
+	
+	
 }

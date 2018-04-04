@@ -14,6 +14,7 @@
 		<script type="text/javascript" src="<c:url value="/resources/js/jquery-3.2.1.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/resources/js/jquery.scrolly.min.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/resources/js/jquery.scrollex.min.js"/>"></script>
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyAD_AQLECL4Gnp6L3gYZzFz8litKmsVZt8"></script>
 		<script type="text/javascript" src="<c:url value="/resources/js/skel.min.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/resources/js/util.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/resources/js/main.js"/>"></script>
@@ -43,6 +44,39 @@
 				document.getElementById('STATICMENU').style.right = stmnLEFT + 'px';
 				document.getElementById('STATICMENU').style.top = document.body.scrollTop + stmnBASE + 'px';
 				RefreshStaticMenu();
+			}		
+			function current_address(){
+				if(navigator.geolocation){
+					navigator.geolocation.getCurrentPosition(function(pos){
+						
+						GoogleMap.initialize(pos.coords.latitude, pos.coords.longitude);
+					},function(e){
+						console.log({
+							0: '현재 위치 정보가 올바르지 않습니다.(msg:'+e.message+')',
+							1: '현재 페이지에서 사용자가 위치 정보 검색을 거부하였습니다',
+							2: '브라우저가 위치 정보를 검색하지 못했습니다.(msg:'+e.message+')',
+							3: '브라우저의 위치 정보 검색 시간이 초과되었습니다.'	
+						}[e.code]);
+						
+					},{
+						enableHeighAccuracy:true,
+						timeout:30000,
+						maximumAge: 0
+					});	
+				}
+				GoogleMap={
+					initialize: function(latitude, longitude){
+						var geocoder=new google.maps.Geocoder();
+						geocoder.geocode({'latLng':new google.maps.LatLng(latitude,longitude)},
+					function(results,status){
+						if(status==google.maps.GeocoderStatus.OK){
+							console.log(results);
+							alert('당신의 위치는 현재'+results[2].formatted_address+'입니다.');
+						}	
+					}			
+						);
+					}				
+				}			
 			}
 		</script>
 	</head>
@@ -93,7 +127,7 @@
 							<header class="align-center">
 								<div style=" display:inline-block;">
 								<input type="text" style="float: left" id="searchAddress">
-								<button>◎</button><button>검색</button>
+								<button id="current_address" onclick="current_address();">◎</button><button>검색</button>
 								</div>
 								<br><br><br><br>
 								<p>지금 가게를 확인하세요!</p>
