@@ -96,7 +96,7 @@ function join(){
 	});
 }
 
-function cancle(){
+function cancel(){
 	location.href = "../";
 }
 </script>
@@ -161,7 +161,7 @@ function cancle(){
 			</div>
 			
 			<div id="joinForm_button_cancle">
-				<input type="button" value="cancle" onclick="cancle()">
+				<input type="button" value="cancel" onclick="cancel()">
 			</div>
 		</div>
 	

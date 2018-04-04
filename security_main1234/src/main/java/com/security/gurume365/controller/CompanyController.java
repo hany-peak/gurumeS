@@ -14,6 +14,7 @@ public class CompanyController {
 	
 	@RequestMapping(value="/join/joinInfoPage",method=RequestMethod.GET)
 	public String jusoInfoPage(){
+		logger.info("회원정보 접속");
 		return "join/joinInfoPage";
 	}
 	
@@ -28,6 +29,12 @@ public class CompanyController {
 		model.addAttribute("addr1", roadAddrPart1);
 		model.addAttribute("addr2", addrDetail);
 		return "join/jusoData";
+	}
+	
+	@RequestMapping(value="/join/companyInfo", method=RequestMethod.GET)
+	public String companyInfo() {
+			logger.info("업체정보 접속");
+		return "join/companyInfo";
 	}
 	
 	

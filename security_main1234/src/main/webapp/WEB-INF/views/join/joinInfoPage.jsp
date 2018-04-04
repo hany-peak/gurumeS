@@ -36,33 +36,20 @@
 <div class="id">
 이메일<input type="text" id="id" >
 </div>
-<div class="company_name">
-업체명<input type="text" id="company_name" >
+<div class="password">
+비밀번호<input type="password" id="password">
 </div>
-<div class="company_no">
-사업자등록번호<input type="text" id="company_no" >
+<div class="password2">
+비밀번호 확인<input type="password" id="password2">
 </div>
-<div class="address">
-주소<input type="text" id="address">
-<input type="button" value="주소 검색" id="popup" onclick="addressPopup();">
+<div class="name">
+이름<input type="text" id="name">
 </div>
-<div class="address2">
-상세 주소<input type="text" id="address2">
+<div>
+생년월일<input type="text" id="date_of_birth">
 </div>
 <div class="phone">
 전화번호<input type="text" id="phone" >
-</div>
-<div class="shop_no">
-가게번호<input type="text" id="shop_no" >
-</div>
-<div class="category">
-업종<input type="text" id="category" >
-</div>
-<div class="time_of_open">
-영업시간<input type="text" id="time_of_open">
-</div>
-<div class="shop_info">
-가게 소개<textarea rows="5" cols="40"></textarea>
 </div>
 </form>
 <div>
