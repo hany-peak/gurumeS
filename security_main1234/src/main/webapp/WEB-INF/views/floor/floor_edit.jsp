@@ -145,8 +145,12 @@
 
 	<div id="info-div">
 	
-		<div id="tableinfo-div">
-			
+		<div id="tableinfo-div" align="center">
+			<table id="table-info-table">
+				<tr>
+					<th>No.</th><th>shape</th><th>min</th><th>max</th><th>del</th>
+				</tr>
+			</table>
 		</div>
 		
 		<div id="floorinfo-div">

@@ -133,7 +133,7 @@ $(function() {
 		$( "#draggable-rect" ).remove();
 		
 		var html = '' +
-			'<div id="draggable-circle">' +
+			'<div id="draggable-circle" min="2" max="5">' +
 				/*'<div id="rotateable-circle">' +
 					'<div id="rotate-circle"></div>' +
 				'</div>' +*/
@@ -141,7 +141,7 @@ $(function() {
 			'</div>';
 		
 		html += 
-		'<div id="draggable-rect">' +
+		'<div id="draggable-rect" min="2" max="4">' +
 			/*'<div id="rotateable-rect">' +
 				'<div id="rotate-rect"></div>' +
 			'</div>' +*/
@@ -306,6 +306,7 @@ $(function() {
 		drop: function(event) {
 			if(!(currentDrag=="#draggable-circle"||currentDrag=="#draggable-rect")) {
 				$(currentDrag).remove();
+				setTableInfo();
 			}
 		}
 	});
@@ -323,10 +324,10 @@ $(function() {
 			create_table_no += 1;
 		}
 		
-		var tableShape = '?';
-		var tableAngle = 0;
-		var tableMin = 2;
-		var tableMax = 4;
+		/*var tableShape = '?';*/
+		/*var tableAngle = 0;*/
+		/*var tableMin = 2;*/
+		/*var tableMax = 4;*/
 		/*if(cd=="#draggable-circle") {
 			table_shape = "circle";
 		} else if(cd=="#draggable-rect") {
@@ -342,6 +343,9 @@ $(function() {
 		'</div>';
 		$( '#floor-edit' ).append(html);
 		
+		$('#draggable-table' + create_table_no).attr('min', $(cd).attr('min'));
+		$('#draggable-table' + create_table_no).attr('max', $(cd).attr('max'));
+		
 		
 		$('#draggable-table' + create_table_no).draggable({
 			handle: '#drag-table' + create_table_no,
@@ -353,7 +357,7 @@ $(function() {
 		});
 		
 		if(cd=="#draggable-circle") {
-			tableShape = 'circle';
+			/*tableShape = 'circle';*/
 			$('#draggable-table' + create_table_no).width(tableC_W);
 			$('#draggable-table' + create_table_no).height(tableC_W);
 			/*$('#drag-table' + create_table_no).css('border-radius', '50%');*/
@@ -362,7 +366,7 @@ $(function() {
 			$('#drag-table' + create_table_no).addClass('drag-table-circle');
 		}
 		else if(cd=="#draggable-rect") {
-			tableShape = 'rect';
+			/*tableShape = 'rect';*/
 			$('#draggable-table' + create_table_no).width(tableR_W);
 			$('#draggable-table' + create_table_no).height(tableR_H);
 
@@ -387,15 +391,7 @@ $(function() {
 		
 		
 		
-		tableInfo = $('.draggable-table').map(function(idx, elem) {
-			var abX = (parseInt($(elem).css('left')) - parseInt($('#floor-enable').css('left')))/($('#floor-enable').width()-$(elem).width())*100;
-			var abY = (parseInt($(elem).css('top')) - parseInt($('#floor-enable').css('top')))/($('#floor-enable').height()-$(elem).height())*100;
-			return {x: abX, y: abY, shape: tableShape, angle: tableAngle, min: tableMin, max: tableMax, ID: elem.id};
-		});
-		
-		for(var i=0; i<tableInfo.length; i++) {
-			console.log(tableInfo[i]);
-		}
+		setTableInfo();
 		
 
 		
@@ -412,5 +408,38 @@ $(function() {
 	
 });
 
-
+function setTableInfo() {
+	tableInfo = $('.draggable-table').map(function(idx, elem) {
+		var abX = (parseInt($(elem).css('left')) - parseInt($('#floor-enable').css('left')))/($('#floor-enable').width()-$(elem).width())*100;
+		var abY = (parseInt($(elem).css('top')) - parseInt($('#floor-enable').css('top')))/($('#floor-enable').height()-$(elem).height())*100;
+		/*var tableHeight;
+		var tableWidth;*/
+		var tableShape = '?';
+		var tableAngle = 0;
+		var tableMin = $(elem).attr('min');
+		var tableMax = $(elem).attr('max');
+		var floorNo = 0;
+		
+		if($('#drag-table' + elem.id.replace('draggable-table', '')).hasClass('drag-table-circle')) {
+			tableShape = 'circle';
+		}
+		else if($('#drag-table' + elem.id.replace('draggable-table', '')).hasClass('drag-table-rect')) {
+			tableShape = 'rect';
+		}
+		
+		return {floor_no: 1, x: abX, y: abY, height: $(elem).height(), width: $(elem).width(), shape: tableShape, angle: tableAngle, min: tableMin, max: tableMax, ID: elem.id};
+	});
+	
+	$('#table-info-table').html('<tr><th>No.</th><th>shape</th><th>min</th><th>max</th><th>del</th></tr>');
+	
+	for(var i=0; i<tableInfo.length; i++) {
+		console.log(tableInfo[i]);
+		var no = tableInfo[i].ID;
+		no = no.replace('draggable-table', '');
+		var html = '<tr><td>' + no + '</td><td>' + tableInfo[i].shape +
+		'</td><td>' + tableInfo[i].min + '</td><td>' + tableInfo[i].max + '</td><td>' +
+		'<button>×</button></td></tr>';
+		$('#table-info-table').append(html);
+	}
+}
 
