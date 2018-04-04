@@ -46,6 +46,46 @@
 				RefreshStaticMenu();
 			}
 		</script>
+		
+		<script>
+		//제이쿼리를 이용한 이미지 페이지 넘김
+$(function() {
+    var time = 500;
+    var idx = idx2 = 0;
+    var slide_width = $("#slider").width();
+    var slide_count = $("#slider li").size();
+    $("#slider li:first").css("display", "block");
+    if(slide_count > 1)
+        $(".btn").css("display", "inline");
+ 
+    $("#prev_btn").click(function() {
+        if(slide_count > 1) {
+            idx2 = (idx - 1) % slide_count;
+            if(idx2 < 0)
+                idx2 = slide_count - 1;
+            $("#slider li:hidden").css("left", "-"+slide_width+"px");
+            $("#slider li:eq("+idx+")").animate({ left: "+="+slide_width+"px" }, time, function() {
+                $(this).css("display", "none").css("left", "-"+slide_width+"px");
+            });
+            $("#slider li:eq("+idx2+")").css("display", "block").animate({ left: "+="+slide_width+"px" }, time);
+            idx = idx2;
+        }
+    });
+ 
+    $("#next_btn").click(function() {
+        if(slide_count > 1) {
+            idx2 = (idx + 1) % slide_count;
+            $("#slider li:hidden").css("left", slide_width+"px");
+            $("#slider li:eq("+idx+")").animate({ left: "-="+slide_width+"px" }, time, function() {
+                $(this).css("display", "none").css("left", slide_width+"px");
+            });
+            $("#slider li:eq("+idx2+")").css("display", "block").animate({ left: "-="+slide_width+"px" }, time);
+            idx = idx2;
+        }
+    });
+});
+</script>
+		
 	</head>
 	
 	<body onload="InitializeStaticMenu();">
@@ -56,34 +96,18 @@
 
 		<!-- Header -->
 			<header id="header" class="alt">
-			
-				<a href="<c:url value=""/>">홈으로</a>
 				
 				<sec:authorize access="isAnonymous()">
-					<a href="<c:url value="/join/joinPermission" />">회원가입</a>
 					<a href="<c:url value="/login/loginForm" />">로그인</a>
+					<a href="<c:url value="/join/joinPermission" />">회원가입</a>
 				</sec:authorize>
 							
 				<sec:authorize access="isAuthenticated()">
 					<a href="/gurume365/logout">로그아웃</a>
+					<a href="/gurume365/chat/chatRoom">채팅 페이지 시험용</a>
 				</sec:authorize>
-			
-				<a href="#menu">Menu</a>
-			</header>
-		<!-- Nav -->
-			<nav id="menu">
-				<ul class="links">
-					<li><a href="">Home</a></li>
-					<li><a href="<c:url value="/join/joinPermission" />">Join</a></li>
-					<li><a href="<c:url value="/login/loginForm" />">Login</a></li>
-					<sec:authorize access="isAuthenticated()">
-						<a href="/gurume365/logout">로그아웃</a>
-					</sec:authorize>
-					<li><a href="<c:url value="/join/joinInfoPage" />">Company</a></li>
-					<li><a href="<c:url value="/floor/floor-edit" />">floor-edit</a></li>
-				</ul>
-			</nav>
 
+			</header>
 		<!-- Banner -->
 			<section id="banner">
 				<div class="inner">
@@ -91,89 +115,43 @@
 						<h1>GURUME 365</h1>
 						<p>당신의 미식(美食)을 책임집니다!</p>
 					</header>
-					<a href="#main" class="button big scrolly">시작하기</a>
+					<a href="#main" class="button big scrolly" id="mainAtag">위치를 선택하세요</a>
 				</div>
 			</section>
 
 		<!-- Main -->
 			<div id="main">
-
-				<!-- Section -->
-					<section class="wrapper style1">
-						<div class="inner">
-							<header class="align-center">
-								<div style=" display:inline-block;">
-								<input type="text" style="float: left" id="searchAddress">
-								<button>◎</button><button>검색</button>
+								<p class="mainTitle" style="text-align: center; font-weight: bold;">당신은 지금 어디에 있나요?</p>
+								<div class="w3-center">
+  										<img src="<c:url value="/resources/img/seoul-1.jpg"/>" height="330px" width="417px" class="w3-hover-grayscale">
+  										<img src="<c:url value="/resources/img/busan-1.jpg"/>" height="330px" width="417px" class="w3-hover-grayscale">
+  										<img src="<c:url value="/resources/img/jeju-1.jpg"/>" height="330px" width="417px" class="w3-hover-grayscale" >
 								</div>
-								<br><br><br><br>
-								<p>지금 가게를 확인하세요!</p>
-							</header>
-							<div class="flex flex-3">
-								<div class="col align-center">
-									<div class="image round fit">
-										<a href=""><img src="<c:url value="/resources/img/1.jpg"/>" alt="" /></a>
-									</div>
-									<p>가게설명1</p>
-									<a href="#" class="button">Learn More</a>
+								<div class="w3-center">
+  										<img src="<c:url value="/resources/img/daegu.jpg"/>" height="250px" width="250px" class="w3-hover-grayscale">
+  										<img src="<c:url value="/resources/img/daejeon.jpg"/>" height="250px" width="250px" class="w3-hover-grayscale">
+  										<img src="<c:url value="/resources/img/inchon.jpg"/>" height="250px" width="250px" class="w3-hover-grayscale">
+  										<img src="<c:url value="/resources/img/jeonju.jpg"/>" height="250px" width="250px" class="w3-hover-grayscale">
+  										<img src="<c:url value="/resources/img/kwangju.jpg"/>" height="250px" width="250px" class="w3-hover-grayscale">
 								</div>
-								<div class="col align-center">
-									<div class="image round fit">
-										<a href=""><img src="<c:url value="/resources/img/1.jpg"/>" alt="" /></a>
-									</div>
-									<p>가게설명2</p>
-									<a href="#" class="button">Learn More</a>
-								</div>
-								<div class="col align-center">
-									<div class="image round fit">
-										<a href=""><img src="<c:url value="/resources/img/1.jpg"/>" alt="" /></a>
-									</div>
-									<p>가게설명3</p>
-									<a href="#" class="button">Learn More</a>
-								</div>
-							</div>
-						</div>
-					</section>
-
 			</div>
-
-		<!-- Footer -->
-			<footer id="footer">
-				<div class="copyright">
-					<ul class="icons">
-						<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-						<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-						<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-						<li><a href="#" class="icon fa-snapchat"><span class="label">Snapchat</span></a></li>
-					</ul>
+			<br><br><br><br>
+		<!-- footer -->
+			
+			<footer>
+				<div class="tail" style="color: white">
+					<h2>GURUME365,</h2>
+					<p>사업자는 노쇼를 줄이고</p>
+					<p>손님은 더 저렴하게 예약할수 있습니다.</p>
+					<p>당신의 방문을 환영합니다.</p>
 					<p>&copy; GURUME365. All rights reserved.</p>
+				</div>
+				<div class="footMenu" style="color: white">
+						<a href="">개발자 소개</a>
+						<a href="">이용약관</a>
+						<a href="">개인정보 취급방침</a>
 				</div>
 			</footer>
 
-		<!-- Scripts -->
-			
-
-
-
-
-
-
-<!--  
-<h1>Home!</h1>
-
-<sec:authorize access="isAnonymous()">
-<p><a href="<c:url value="/login/loginForm" />">로그인</a></p>
-<p><a href="<c:url value="/join/joinPermission" />">회원가입</a></p>
-</sec:authorize>
-<sec:authorize access="isAuthenticated()">
-<form:form action="${pageContext.request.contextPath}/logout" method="POST">
-    <input type="submit" value="로그아웃" />
-</form:form>
-</sec:authorize>
-<h3>
-    [<a href="<c:url value="/intro/introduction" />">소개 페이지</a>]
-    [<a href="<c:url value="/admin/adminHome" />">관리자 홈</a>]
-</h3>
--->
 </body>
 </html>
