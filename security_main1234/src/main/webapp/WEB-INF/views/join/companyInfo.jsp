@@ -4,42 +4,43 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>업체 정보</title>
-<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAD_AQLECL4Gnp6L3gYZzFz8litKmsVZt8"></script>
-<script>
-	var map;
-	var myCenter=new google.maps.LatLng(37.250943, 127.028854);
-	
-	function initialize()
-	{
-		var marker=new google.maps.Marker({
-			position:myCenter,
-			map: map,
-			animation: google.maps.Animation.BOUNCE			
-		});
-		var mapApper={
-			center: myCenter,
-			zoom: 15,
-			mapTypeId: google.maps.MapTypeId.ROADMAP
-		};
-		
-		map=new google.maps.Map(document.getElementById("googleMap"),mapApper);
-		
-		google.maps.event.addListener(map, 'click', function(event){
-			placeMarker(event.latLng);
-		});
-		marker.setMap(map);
+<title>업체 등록 정보</title>
+<script type="text/javascript" src="<c:url value='/resources/js/jquery-3.2.1.js'/>"></script>
+<script type="text/javascript">
+	function addressPopup(){
+		var url="jusoPopup"
+		window.open(url,"","width=400,height=400,left=600");
 	}
-	google.maps.event.addDomListener(window,'load', initialize);
+	function addressCallback(roadFullAddr,roadAddrPart1,addrDetail,
+			roadAddrPart2,engAddr,jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn,detBdNmList,
+			bdNm,bdKdcd,siNm,sggNm,emdNm,liNm,rn,udrtYn,buldMnnm,buldSlno,mtYn,
+			lnbrMnnm,lnbrSlno,emdNo){
+		
+		document.form.roadAddrPart1.value=roadAddrPart1;
+		document.form.addrDetail.value=addrDetail;
+		
+		var address = $('#address');
+		var address2 = $('#address2');
+		address.attr("value",roadAddrPart1);
+		address2.attr("value",addrDetail);	
+		self.close;
+	}
 </script>
 </head>
 <body>
 <div>
+	<div id="big_title">
+		<h1>업체 등록 정보</h1>
+	</div>
 	<div class="company_name">
 		상호명<input type="text" id="company_name">
 	</div>
-	<div class="position">
-		위치<div id="googleMap" style="width:300px;height:250px"></div>
+	<div class="address">
+		주소<input type="text" id="address">
+	</div>
+	<div class="address2">
+		상세주소<input type="text" id="address2">
+		<input type="button" value="주소검색" onclick="addressPopup();">
 	</div>
 	<div class="phone">
 		연락처<input type="text" id="phone" >
@@ -58,6 +59,10 @@
 	</div>
 	<div class="introduce">
 		소개 및 세부사항<textarea rows="5" cols="40" id="introduce"></textarea>
+	</div>
+	<div>
+		<input type="submit" value="수정">
+		<input type="button" value="취소">
 	</div>
 </div>
 </body>
