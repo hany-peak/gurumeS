@@ -110,6 +110,16 @@ $(function() {
 			</header>
 		<!-- Banner -->
 			<section id="banner">
+			
+				<img src="<c:url value="/resources/img/Main_4.gif"/>" class="bgImg">
+				<input type="radio" name="pos" id="pos1" checked>
+				<input type="radio" name="pos" id="pos2">
+				<input type="radio" name="pos" id="pos3">
+				<input type="radio" name="pos" id="pos4">
+				
+				
+				
+				
 				<div class="inner">
 					<header>
 						<h1>GURUME 365</h1>
@@ -128,11 +138,11 @@ $(function() {
   										<img src="<c:url value="/resources/img/jeju-1.jpg"/>" height="330px" width="417px" class="w3-hover-grayscale" >
 								</div>
 								<div class="w3-center">
-  										<img src="<c:url value="/resources/img/daegu.jpg"/>" height="250px" width="250px" class="w3-hover-grayscale">
-  										<img src="<c:url value="/resources/img/daejeon.jpg"/>" height="250px" width="250px" class="w3-hover-grayscale">
-  										<img src="<c:url value="/resources/img/inchon.jpg"/>" height="250px" width="250px" class="w3-hover-grayscale">
-  										<img src="<c:url value="/resources/img/jeonju.jpg"/>" height="250px" width="250px" class="w3-hover-grayscale">
-  										<img src="<c:url value="/resources/img/kwangju.jpg"/>" height="250px" width="250px" class="w3-hover-grayscale">
+  										<img src="<c:url value="/resources/img/daegu-1.jpg"/>" height="250px" width="250px" class="w3-hover-grayscale">
+  										<img src="<c:url value="/resources/img/daejeon-1.jpg"/>" height="250px" width="250px" class="w3-hover-grayscale">
+  										<img src="<c:url value="/resources/img/inchon-1.jpg"/>" height="250px" width="250px" class="w3-hover-grayscale">
+  										<img src="<c:url value="/resources/img/jeonju-1.jpg"/>" height="250px" width="250px" class="w3-hover-grayscale">
+  										<img src="<c:url value="/resources/img/kwangju-1.jpg"/>" height="250px" width="250px" class="w3-hover-grayscale">
 								</div>
 			</div>
 			<br><br><br><br>
