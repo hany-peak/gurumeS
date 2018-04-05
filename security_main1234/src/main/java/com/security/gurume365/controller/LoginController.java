@@ -81,9 +81,9 @@ public class LoginController {
 			messageHelper.setFrom(setfrom);
 			messageHelper.setTo(tomail);
 			messageHelper.setSubject(title);
-			messageHelper.setText(new StringBuffer().append("��������")
+			messageHelper.setText(new StringBuffer().append("ㅁㄴㅇㄹ")
 					.append("http://localhost:8888/gurume365/join/joinPermit?id="+users.getId())
-							.append(" �̸��� ���� Ȯ��").toString());
+							.append(" ㅁㄴㅇㄹ").toString());
 			mailSender.send(message);
 		} catch (Exception e) {
 			System.out.println(e);
