@@ -334,6 +334,7 @@
 		-webkit-justify-content: center;
 		-ms-justify-content: center;
 		justify-content: center;
+		background-image: url("../../resources/img/Main_4.gif");
 		background-position: center;
 		background-size: cover;
 		background-repeat: no-repeat;
@@ -771,8 +772,4 @@ a {
 #mainAtag:active{
 	transform: translateY(3px);
 	border-bottom:2px solid #D8D8D8;
-}
-
-.bgImg{
-	z-index: -5;
 }

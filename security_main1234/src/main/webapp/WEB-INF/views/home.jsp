@@ -110,16 +110,6 @@ $(function() {
 			</header>
 		<!-- Banner -->
 			<section id="banner">
-			
-				<img src="<c:url value="/resources/img/Main_4.gif"/>" class="bgImg">
-				<input type="radio" name="pos" id="pos1" checked>
-				<input type="radio" name="pos" id="pos2">
-				<input type="radio" name="pos" id="pos3">
-				<input type="radio" name="pos" id="pos4">
-				
-				
-				
-				
 				<div class="inner">
 					<header>
 						<h1>GURUME 365</h1>
